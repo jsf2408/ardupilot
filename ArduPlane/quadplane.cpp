@@ -368,7 +368,7 @@ const AP_Param::GroupInfo QuadPlane::var_info2[] = {
     // @User: Standard
 	AP_GROUPINFO("AHRS_TRIM_Y", 13, QuadPlane, quadplane_ahrs_trim_y, 0),
 	
-	// @Param: AHRS_TRIM_X
+	// @Param: AHRS_TRIM_Z
     // @DisplayName: Quadplane AHRS Trim Yaw
     // @Description: Compensates for the Yaw angle trim difference between forward and vertical flight, NOTE! this is relative to forward flight trim not mounting locaiton, requres reboot
 	// @Units: radians
