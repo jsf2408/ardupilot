@@ -207,14 +207,20 @@ bool QuadPlane::in_tailsitter_vtol_transition(void) const
 */
 void QuadPlane::tailsitter_speed_scaling(void)
 {
-    const float hover_throttle = motors->get_throttle_hover();
-    const float throttle = motors->get_throttle();
-    const float scaling_max = 5;
-    float scaling = 1;
+	float hover_throttle = 0.5;
+	float scaling = 1;
+
+	if (is_zero(tailsitter.throttle_scale)){
+        hover_throttle = motors->get_throttle_hover();
+	} else {
+		hover_throttle = tailsitter.throttle_scale;
+	}
+	
+	const float throttle = motors->get_throttle();
     if (is_zero(throttle)) {
-        scaling = scaling_max;
+        scaling = tailsitter.throttle_scale_max;
     } else {
-        scaling = constrain_float(hover_throttle / throttle, 1/scaling_max, scaling_max);
+        scaling = constrain_float(hover_throttle / throttle, 0, tailsitter.throttle_scale_max);
     }
     const SRV_Channel::Aux_servo_function_t functions[2] = {
         SRV_Channel::Aux_servo_function_t::k_aileron,

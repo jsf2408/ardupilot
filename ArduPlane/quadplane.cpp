@@ -422,7 +422,45 @@ const AP_Param::GroupInfo QuadPlane::var_info2[] = {
     // @Range: 0.2 5
     // @User: Standard
     AP_GROUPINFO("TRANS_DECEL", 1, QuadPlane, transition_decel, 2.0),
-
+	
+	// @Param: TAILSIT_THSCMX
+    // @DisplayName: Maximum control throttle scaling value
+    // @Description: Maximum value of throttle scaling for tailsitter velocity scaling, reduce this value to remove low thorottle D ossilaitons 
+    // @Range: 1 5
+    // @User: Standard
+	AP_GROUPINFO("TAILSIT_THSCMX", 2, QuadPlane, tailsitter.throttle_scale_max, 5),
+	
+	// @Param: TAILSIT_TH_SC
+    // @DisplayName: Throttle control scaling value
+    // @Description: if 0 use Q_M_THST_HOVER as before else use defined value, allows control scaling to be set indpenedently of thrust hover also so auto hover learning wont effect throttle scaling, changing this value will requre roll and pitch PID's to be re-tuned  
+    // @Range: 0 1
+    // @User: Standard
+	AP_GROUPINFO("TAILSIT_TH_SC", 3, QuadPlane, tailsitter.throttle_scale, 0),
+	
+    // @Param: AHRS_TRIM_X
+    // @DisplayName: Quadplane AHRS Trim Roll
+    // @Description: Compensates for the roll angle trim difference between forward and vertical flight
+	// @Units: radians
+    // @Range: -180 +180
+    // @User: Standard
+	AP_GROUPINFO("AHRS_TRIM_X", 4, QuadPlane, quadplane_ahrs_trim_x, 0),
+	
+	// @Param: AHRS_TRIM_Y
+    // @DisplayName: Quadplane AHRS Trim Pitch
+    // @Description: Compensates for the Pitch angle trim difference between forward and vertical flight
+	// @Units: radians
+    // @Range: -180 +180
+    // @User: Standard
+	AP_GROUPINFO("AHRS_TRIM_Y", 5, QuadPlane, quadplane_ahrs_trim_y, 0),
+	
+	// @Param: AHRS_TRIM_X
+    // @DisplayName: Quadplane AHRS Trim Yaw
+    // @Description: Compensates for the Yaw angle trim difference between forward and vertical flight
+	// @Units: radians
+    // @Range: -180 +180
+    // @User: Standard
+	AP_GROUPINFO("AHRS_TRIM_Z", 6, QuadPlane, quadplane_ahrs_trim_z, 0),
+	
     AP_GROUPEND
 };
 

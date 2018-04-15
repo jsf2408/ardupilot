@@ -229,7 +229,7 @@ private:
 
     // transition deceleration, m/s/s
     AP_Float transition_decel;
-    
+	
     AP_Int16 rc_speed;
 
     // min and max PWM for throttle
@@ -407,6 +407,8 @@ private:
         AP_Float vectored_forward_gain;
         AP_Float vectored_hover_gain;
         AP_Float vectored_hover_power;
+		AP_Float throttle_scale_max;
+		AP_Float throttle_scale;
     } tailsitter;
 
     // the attitude view of the VTOL attitude controller
