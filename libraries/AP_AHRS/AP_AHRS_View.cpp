@@ -21,24 +21,33 @@
 #include "AP_AHRS_View.h"
 #include <stdio.h>
 
-AP_AHRS_View::AP_AHRS_View(AP_AHRS &_ahrs, enum Rotation _rotation) :
+AP_AHRS_View::AP_AHRS_View(AP_AHRS &_ahrs, enum Rotation _rotation, float x_trim, float y_trim, float z_trim) :
     rotation(_rotation),
     ahrs(_ahrs)
 {
+	float x_angle = 0;
+	float y_angle = 0;
+	float z_angle = 0;
+	
     switch (rotation) {
     case ROTATION_NONE:
-        rot_view.identity();
         break;
     case ROTATION_PITCH_90:
-        rot_view.from_euler(0, radians(90), 0);
+	    y_angle = radians(90);
         break;
     case ROTATION_PITCH_270:
-        rot_view.from_euler(0, radians(270), 0);
+	    y_angle =  radians(270);
         break;
     default:
         AP_HAL::panic("Unsupported AHRS view %u\n", (unsigned)rotation);
     }
 
+	x_angle += x_trim;
+	y_angle += y_trim;
+	z_angle += z_trim;
+	
+	rot_view.from_euler(x_angle, y_angle, z_angle);
+	
     // setup initial state
     update();
 }
