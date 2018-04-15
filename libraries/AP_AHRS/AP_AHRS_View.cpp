@@ -58,13 +58,12 @@ void AP_AHRS_View::update(bool skip_ins_update)
     rot_body_to_ned = ahrs.get_rotation_body_to_ned();
     gyro = ahrs.get_gyro();
 
-    if (rotation != ROTATION_NONE) {
-        Matrix3f &r = rot_body_to_ned;
-        r.transpose();
-        r = rot_view * r;
-        r.transpose();
-        gyro.rotate(rotation);
-    }
+    Matrix3f &r = rot_body_to_ned;
+    r.transpose();
+    r = rot_view * r;
+    r.transpose();
+    gyro.rotate(rotation);
+
 
     rot_body_to_ned.to_euler(&roll, &pitch, &yaw);
 
