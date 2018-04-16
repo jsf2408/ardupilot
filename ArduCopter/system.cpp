@@ -572,7 +572,7 @@ void Copter::allocate_motors(void)
     }
     AP_Param::load_object_from_eeprom(motors, motors_var_info);
 
-    AP_AHRS_View *ahrs_view = ahrs.create_view(ROTATION_NONE);
+    AP_AHRS_View *ahrs_view = ahrs.create_view(ROTATION_NONE, 0.0f, 0.0f, 0.0f);
     if (ahrs_view == nullptr) {
         AP_HAL::panic("Unable to allocate AP_AHRS_View");
     }
