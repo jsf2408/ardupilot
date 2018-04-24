@@ -315,13 +315,13 @@ void AP_AHRS::update_cd_values(void)
 /*
   create a rotated view of AP_AHRS
  */
-AP_AHRS_View *AP_AHRS::create_view(enum Rotation rotation)
+AP_AHRS_View *AP_AHRS::create_view(enum Rotation rotation, float x_trim, float y_trim, float z_trim)
 {
     if (_view != nullptr) {
         // can only have one
         return nullptr;
     }
-    _view = new AP_AHRS_View(*this, rotation);
+    _view = new AP_AHRS_View(*this, rotation, x_trim, y_trim, z_trim);
     return _view;
 }
 

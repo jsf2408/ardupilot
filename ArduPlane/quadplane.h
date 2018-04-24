@@ -226,6 +226,11 @@ private:
     // transition deceleration, m/s/s
     AP_Float transition_decel;
     
+	// Quadplane trim, radians
+	AP_Float quadplane_ahrs_trim_x;
+	AP_Float quadplane_ahrs_trim_y;
+	AP_Float quadplane_ahrs_trim_z;
+	
     AP_Int16 rc_speed;
 
     // min and max PWM for throttle
@@ -401,6 +406,8 @@ private:
         AP_Float vectored_forward_gain;
         AP_Float vectored_hover_gain;
         AP_Float vectored_hover_power;
+	    AP_Float throttle_scale_max;
+    	AP_Float throttle_scale;
     } tailsitter;
 
     // the attitude view of the VTOL attitude controller
