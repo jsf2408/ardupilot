@@ -352,6 +352,44 @@ const AP_Param::GroupInfo QuadPlane::var_info2[] = {
     // @Path: ../libraries/AC_WPNav/AC_Loiter.cpp
     AP_SUBGROUPPTR(loiter_nav, "LOIT_",  2, QuadPlane, AC_Loiter),
 
+    // @Param: TAILSIT_THSCMX
+    // @DisplayName: Maximum control throttle scaling value
+    // @Description: Maximum value of throttle scaling for tailsitter velocity scaling, reduce this value to remove low thorottle D ossilaitons 
+    // @Range: 1 5
+    // @User: Standard
+	AP_GROUPINFO("TAILSIT_THSCMX", 10, QuadPlane, tailsitter.throttle_scale_max, 5),
+	
+	// @Param: TAILSIT_TH_SC
+    // @DisplayName: Throttle control scaling value
+    // @Description: if 0 use Q_M_THST_HOVER as before else use defined value, allows control scaling to be set indpenedently of thrust hover also so auto hover learning wont effect throttle scaling, changing this value will requre roll and pitch PID's to be re-tuned  
+    // @Range: 0 1
+    // @User: Standard
+	AP_GROUPINFO("TAILSIT_TH_SC", 11, QuadPlane, tailsitter.throttle_scale, 0),
+
+	// @Param: AHRS_TRIM_X
+    // @DisplayName: Quadplane AHRS Trim Roll
+    // @Description: Compensates for the roll angle trim difference between forward and vertical flight, NOTE! this is relative to forward flight trim not mounting locaiton, requres reboot
+ 	// @Units: rad
+    // @Range: -3.1415 +3.1415
+    // @User: Standard
+	AP_GROUPINFO("AHRS_TRIM_X", 12, QuadPlane, quadplane_ahrs_trim_x, 0),
+	
+ 	// @Param: AHRS_TRIM_Y
+    // @DisplayName: Quadplane AHRS Trim Pitch
+    // @Description: Compensates for the Pitch angle trim difference between forward and vertical flight, NOTE! this is relative to forward flight trim not mounting locaiton, requres reboot
+ 	// @Units: rad
+    // @Range: -3.1415 +3.1415
+    // @User: Standard
+	AP_GROUPINFO("AHRS_TRIM_Y", 13, QuadPlane, quadplane_ahrs_trim_y, 0),
+	
+	// @Param: AHRS_TRIM_Z
+    // @DisplayName: Quadplane AHRS Trim Yaw
+    // @Description: Compensates for the Yaw angle trim difference between forward and vertical flight, NOTE! this is relative to forward flight trim not mounting locaiton, requres reboot
+ 	// @Units: rad
+    // @Range: -3.1415 +3.1415
+    // @User: Standard
+	AP_GROUPINFO("AHRS_TRIM_Z", 14, QuadPlane, quadplane_ahrs_trim_z, 0),
+	
     AP_GROUPEND
 };
 
@@ -536,7 +574,7 @@ bool QuadPlane::setup(void)
     AP_Param::load_object_from_eeprom(motors, motors_var_info);
 
     // create the attitude view used by the VTOL code
-    ahrs_view = ahrs.create_view(rotation);
+    ahrs_view = ahrs.create_view(rotation, (float)quadplane_ahrs_trim_x, (float)quadplane_ahrs_trim_y, (float)quadplane_ahrs_trim_z);
     if (ahrs_view == nullptr) {
         goto failed;
     }
