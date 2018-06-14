@@ -1041,10 +1041,10 @@ void GCS_MAVLINK_Plane::handleMessage(mavlink_message_t* msg)
 		int letter_raw = packet.param1;
 		char letter = 'A' - 1 + letter_raw;
         float conf = packet.param2
-		float time = packet.param3;
+		float tim = packet.param3;
 		float target_x = packet.param5;
 		float target_y = packet.param6;
-		gcs().send_text(MAV_SEVERITY_INFO,"[%.9f] TARGET FOUND: %c, %d%% @ (%.6f,%.6f)",time,letter,conf,target_x,target_y);
+		gcs().send_text(MAV_SEVERITY_INFO,"[%.9f] TARGET FOUND: %c, %d%% @ (%.6f,%.6f)",tim,letter,conf,target_x,target_y);
 	}
 /////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
